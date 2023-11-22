@@ -1,4 +1,6 @@
 class ArticlesController < ApplicationController
+  respond_to :json
+  before_action :authenticate_user!
   before_action :set_article, only: %i[ show update destroy ]
 
   # GET /articles
@@ -18,7 +20,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.save
-      render json: @article, status: :created, location: @article
+      render json: @article, status: :created
     else
       render json: @article.errors, status: :unprocessable_entity
     end
